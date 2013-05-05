@@ -1,0 +1,72 @@
+<?xml version="1.0" ?>
+<wsdl:definitions targetNamespace="urn:listing4"
+                  xmlns:tns="urn:listing4"
+                  xmlns:listing5="urn:listing5"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import namespace="urn:listing5" location="wsdl_import1.wsdl" />
+    <wsdl:types>
+        <xsd:schema targetNamespace="urn:listing4"
+                    xmlns:listing5="urn:listing5"
+                    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.w3.org/2001/XMLSchema"/>
+            <xsd:complexType name="Address">
+                <xsd:sequence>
+                    <xsd:element name="streetNum" type="xsd:int"/>
+                    <xsd:element name="streetName" type="xsd:string"/>
+                    <xsd:element name="city" type="xsd:string"/>
+                    <xsd:element name="state" type="xsd:string"/>
+                    <xsd:element name="phone" type="listing5:Phone"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="GetAddressRequest">
+        <wsdl:part name="name" type="xsd:string"/>
+    </wsdl:message>
+    <wsdl:message name="GetAddressResponse">
+        <wsdl:part name="address" type="tns:Address"/>
+    </wsdl:message>
+    <wsdl:message name="GetPhoneRequest">
+        <wsdl:part name="name" type="xsd:string"/>
+    </wsdl:message>
+    <wsdl:message name="GetPhoneResponse">
+        <wsdl:part name="phone" type="listing5:Phone"/>
+    </wsdl:message>
+
+    <wsdl:portType name="AddressBook">
+        <wsdl:operation name="getAddress">
+            <wsdl:input message="tns:GetAddressRequest"/>
+            <wsdl:output message="tns:GetAddressResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getPhone">
+            <wsdl:input message="tns:GetPhoneRequest"/>
+            <wsdl:output message="tns:GetPhoneResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="AddressBookSoapBinding" type="tns:AddressBook">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getAddress">
+            <soap:operation soapAction="http://localhost:15099/address" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getPhone">
+            <soap:operation soapAction="http://localhost:15099/address" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+</wsdl:definitions>
